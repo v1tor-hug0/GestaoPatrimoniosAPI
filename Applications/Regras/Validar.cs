@@ -1,4 +1,4 @@
-﻿using GerenciamentoPatrimonio.Exceptions;
+﻿using GestaoPatrimonio.Exceptions;
 
 namespace GestaoPatrimonio.Applications.Regras
 {

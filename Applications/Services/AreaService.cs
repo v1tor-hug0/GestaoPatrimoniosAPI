@@ -1,4 +1,4 @@
-﻿using GerenciamentoPatrimonio.Exceptions;
+﻿using GestaoPatrimonio.Exceptions;
 using GestaoPatrimonio.Applications.Regras;
 using GestaoPatrimonio.Domains;
 using GestaoPatrimonio.DTOs.AreaDto;

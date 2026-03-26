@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GestaoPatrimonio.Applications.Services;
 using GestaoPatrimonio.DTOs.AreaDto;
-using GerenciamentoPatrimonio.Exceptions;
+using GestaoPatrimonio.Exceptions;
 
 namespace GestaoPatrimonio.Controllers
 {
