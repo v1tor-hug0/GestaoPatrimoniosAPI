@@ -47,9 +47,9 @@ namespace GestaoPatrimonio.Repositories
 
             Localizacao localizacaoBanco = _context.Localizacao.Find(localizacao.LocalizacaoID);
 
-            if(localizacaoBanco == null)
+            if (localizacaoBanco == null)
             {
-                    return;
+                return;
             }
 
             localizacaoBanco.NomeLocal = localizacao.NomeLocal;
@@ -58,6 +58,11 @@ namespace GestaoPatrimonio.Repositories
             localizacaoBanco.AreaID = localizacao.AreaID;
 
             _context.SaveChanges();
+        }
+
+        public Localizacao BuscarPorNome(string nomeLocal, Guid areaId)
+        {
+            return _context.Localizacao.FirstOrDefault(l => l.NomeLocal.ToLower() == nomeLocal.ToLower() && l.AreaID == areaId);
         }
     }
 }
