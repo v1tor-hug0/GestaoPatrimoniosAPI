@@ -12,5 +12,12 @@ namespace GestaoPatrimonio.Applications.Regras
 
             }
         }
+        public static void ValidarEstado(string estado)
+        {
+            if (string.IsNullOrWhiteSpace(estado))
+            {
+                throw new DomainException("Estado é obrigatório.");
+            }
+        }
     }
 }

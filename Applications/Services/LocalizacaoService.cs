@@ -1,8 +1,9 @@
-﻿using GestaoPatrimonio.Domains;
+﻿using GestaoPatrimonio.Applications.Regras;
+using GestaoPatrimonio.Domains;
 using GestaoPatrimonio.DTOs.LocalizacaoDto;
-using GestaoPatrimonio.Interfaces;
 using GestaoPatrimonio.Exceptions;
-using GestaoPatrimonio.Applications.Regras;
+using GestaoPatrimonio.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestaoPatrimonio.Applications.Services
 {
@@ -23,7 +24,7 @@ namespace GestaoPatrimonio.Applications.Services
             {
                 LocalizacaoID = localizacao.LocalizacaoID,
                 NomeLocal = localizacao.NomeLocal,
-                LocalSAP = localizacao.LocalSAP,
+                LocalSAP = localizacao.LocalSAP,    
                 DescricaoSAP = localizacao.DescricaoSAP,
                 AreaId = localizacao.AreaID
             }).ToList();
@@ -102,5 +103,7 @@ namespace GestaoPatrimonio.Applications.Services
 
             _repository.Atualizar(localizacaoBanco);
         }
+
+        
     }
 }

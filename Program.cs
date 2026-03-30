@@ -3,6 +3,7 @@ using GestaoPatrimonio.Applications.Services;
 using GestaoPatrimonio.Contexts;
 using GestaoPatrimonio.Interfaces;
 using GestaoPatrimonio.Repositories;
+using GestaoPatrimonios.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,14 @@ builder.Services.AddScoped<AreaService>();
 builder.Services.AddScoped<ILocalizacaoRepository, LocalizacaoRepository>();
 builder.Services.AddScoped<LocalizacaoService>();
 
+builder.Services.AddScoped<ICidadeRepository, CidadeRepository>();
+builder.Services.AddScoped<CidadeService>();
+
+builder.Services.AddScoped<IBairroRepository, BairroRepository>();
+builder.Services.AddScoped<BairroService>();
+
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+builder.Services.AddScoped<EnderecoService>();
 
 var app = builder.Build();
 

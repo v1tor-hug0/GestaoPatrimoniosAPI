@@ -25,5 +25,31 @@ namespace GestaoPatrimonio.Repositories
         {
                 return _context.Cidade.FirstOrDefault(c => c.NomeCidade == nomeCidade.ToLower() && c.Estado == nomeEstado.ToLower());
         }
+
+        public void Adicionar(Cidade cidade)
+        {
+            _context.Cidade.Add(cidade);
+            _context.SaveChanges();
+        }
+
+        public void Atualizar(Cidade cidade)
+        {
+            if (cidade == null)
+            {
+                return;
+            }
+
+            Cidade cidadeBanco = _context.Cidade.Find(cidade.CidadeID);
+
+            if (cidadeBanco == null)
+            {
+                return;
+            }
+
+            cidadeBanco.NomeCidade = cidade.NomeCidade;
+            cidadeBanco.Estado = cidade.Estado;
+
+            _context.SaveChanges();
+        }
     }
 }

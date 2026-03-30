@@ -5,6 +5,7 @@ using GestaoPatrimonio.DTOs.CidadeDto;
 using GestaoPatrimonio.Exceptions;
 using GestaoPatrimonio.Interfaces;
 using GestaoPatrimonio.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestaoPatrimonio.Applications.Services
 {
@@ -49,9 +50,50 @@ namespace GestaoPatrimonio.Applications.Services
             return cidadeDto;
         }
 
-        public ListarCidadeDto BuscarPorNomeEEstado(string nomeCidade, string nomeEstado)
+        public void Adicionar(CriarCidadeDto dto)
         {
+            Validar.ValidarNome(dto.NomeCidade);
 
+            Cidade cidadeExistente = _repository.BuscarPorNomeEEstado(dto.NomeCidade, dto.Estado);
+
+            if (cidadeExistente != null)
+            {
+                throw new DomainException("Já existe uma cidade com o mesmo nome e estado.");
+            }
+
+            Cidade novaCidade = new Cidade
+            {
+                CidadeID = Guid.NewGuid(),
+                NomeCidade = dto.NomeCidade,
+                Estado = dto.Estado
+            };
+
+            _repository.Adicionar(novaCidade);
+        }
+
+        public void Atualizar(Guid cidadeId, CriarCidadeDto dto)
+        {
+            Validar.ValidarNome(dto.NomeCidade);
+            Validar.ValidarEstado(dto.Estado);
+
+            Cidade? cidadeBanco = _repository.BuscarPorId(cidadeId);
+
+            if (cidadeBanco == null)
+            {
+                throw new DomainException("Cidade não encontrada.");
+            }
+
+            Cidade? cidadeExistente = _repository.BuscarPorNomeEEstado(dto.NomeCidade, dto.Estado);
+
+            if (cidadeExistente != null && cidadeExistente.CidadeID != cidadeId)
+            {
+                throw new DomainException("Já existe uma cidade cadastrada com esse nome nesse estado.");
+            }
+
+            cidadeBanco.NomeCidade = dto.NomeCidade;
+            cidadeBanco.Estado = dto.Estado;
+
+            _repository.Atualizar(cidadeBanco);
         }
     }
 }
