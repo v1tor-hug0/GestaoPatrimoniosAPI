@@ -6,8 +6,7 @@ namespace GestaoPatrimonio.DTOs.TipoPatrimonioDto
     {
         public Guid TipoPatrimonioID { get; set; }
 
-        public string NomeTipo { get; set; } = null!;
+        public string NomeTipo { get; set; } = string.Empty;
 
-        public virtual ICollection<Patrimonio> Patrimonio { get; set; } = new List<Patrimonio>();
     }
 }

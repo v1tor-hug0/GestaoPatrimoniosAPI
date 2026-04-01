@@ -4,7 +4,7 @@ using GestaoPatrimonio.Interfaces;
 
 namespace GestaoPatrimonio.Repositories
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UsuarioRepository 
     {
         private readonly GestaoPatrimoniosContext _context;
 
@@ -17,6 +17,7 @@ namespace GestaoPatrimonio.Repositories
         {
             return _context.Usuario.OrderBy(u => u.Nome).ToList();
         }
+
 
     }
 }

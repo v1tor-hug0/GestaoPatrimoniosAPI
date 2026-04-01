@@ -3,7 +3,7 @@ using GestaoPatrimonio.Applications.Services;
 using GestaoPatrimonio.Contexts;
 using GestaoPatrimonio.Interfaces;
 using GestaoPatrimonio.Repositories;
-using GestaoPatrimonios.Repositories;
+using GestaoPatrimonio.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,8 +44,11 @@ builder.Services.AddScoped<EnderecoService>();
 builder.Services.AddScoped<ITipoUsuarioRepository, TipoUsuarioRepository>();
 builder.Services.AddScoped<TipoUsuarioService>();
 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<ICargoRepository, CargoRepository>();
+builder.Services.AddScoped<CargoService>();
+
+//builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+//builder.Services.AddScoped<UsuarioService>();
 
 var app = builder.Build();
 

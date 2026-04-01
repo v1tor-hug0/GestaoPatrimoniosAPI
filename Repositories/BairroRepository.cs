@@ -2,7 +2,7 @@
 using GestaoPatrimonio.Domains;
 using GestaoPatrimonio.Interfaces;
 
-namespace GestaoPatrimonios.Repositories
+namespace GestaoPatrimonio.Repositories
 {
     public class BairroRepository : IBairroRepository
     {
