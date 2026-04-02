@@ -1,6 +1,5 @@
 ﻿using GestaoPatrimonio.Applications.Services;
-using GestaoPatrimonio.DTOs.TipoPatrimonioDto;
-using GestaoPatrimonio.Exceptions;
+using GestaoPatrimonio.DTOs.StatusPatrimonioDto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,61 +7,60 @@ namespace GestaoPatrimonio.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TipoPatriomonioController : ControllerBase
+    public class StatusPatrimonioController : ControllerBase
     {
+        private readonly StatusPatrimonioService _service;
 
-        private readonly TipoPatrimonioService _service;
-
-        public TipoPatriomonioController(TipoPatrimonioService service)
+        public StatusPatrimonioController(StatusPatrimonioService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public ActionResult<List<ListarTipoPatrimonioDto>> Listar()
+        public ActionResult<List<ListarStatusPatrimonioDto>> Listar()
         {
             return Ok(_service.Listar());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ListarTipoPatrimonioDto> BuscarPorId(Guid id)
+        public ActionResult<ListarStatusPatrimonioDto> BuscarPorId(Guid id)
         {
             try
             {
                 return Ok(_service.BuscarPorId(id));
             }
-            catch (DomainException ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpPost]
-        public ActionResult Adicionar(CriarTipoPatrimonioDto dto)
+        public ActionResult Adicionar(CriarStatusPatrimonioDto dto)
         {
             try
             {
                 _service.Adicionar(dto);
                 return Created();
             }
-            catch (DomainException ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+               return BadRequest(ex.Message);
             }
         }
 
         [HttpPut("{id}")]
-        public ActionResult Atualizar( Guid id ,CriarTipoPatrimonioDto dto)
+        public ActionResult Atualizar(Guid id, CriarStatusPatrimonioDto dto)
         {
             try
             {
                 _service.Atualizar(id, dto);
                 return NoContent();
             }
-            catch (DomainException ex)
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
     }
-    }
+}

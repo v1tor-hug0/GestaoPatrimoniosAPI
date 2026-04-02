@@ -15,7 +15,7 @@ namespace GestaoPatrimonio.Repositories
 
         public List<TipoPatrimonio> Listar()
         {
-            return _context.TipoPatrimonio.OrderBy(p => p.Patrimonio).ToList();
+            return _context.TipoPatrimonio.OrderBy(p => p.NomeTipo).ToList();
         }
 
         public TipoPatrimonio BuscarPorId(Guid tipoPatrimonioId)

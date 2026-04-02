@@ -1,8 +1,9 @@
-﻿using GestaoPatrimonio.Domains;
+﻿using GestaoPatrimonio.Applications.Regras;
+using GestaoPatrimonio.Domains;
+using GestaoPatrimonio.DTOs.BairroDto;
 using GestaoPatrimonio.DTOs.TipoPatrimonioDto;
-using GestaoPatrimonio.Interfaces;
 using GestaoPatrimonio.Exceptions;
-using GestaoPatrimonio.Applications.Regras;
+using GestaoPatrimonio.Interfaces;
 
 namespace GestaoPatrimonio.Applications.Services
 {
@@ -31,18 +32,16 @@ namespace GestaoPatrimonio.Applications.Services
         {
             TipoPatrimonio tipo = _repository.BuscarPorId(tipoPatrimonioId);
 
-            if(tipo == null)
+            if (tipo == null)
             {
-                throw new DomainException("Tipo de patrimônio não encontrado.");
+                throw new DomainException("Tipo de patrimonio não encontrado.");
             }
 
-            ListarTipoPatrimonioDto tipoDto = new ListarTipoPatrimonioDto
+            return new ListarTipoPatrimonioDto
             {
                 TipoPatrimonioID = tipo.TipoPatrimonioID,
                 NomeTipo = tipo.NomeTipo
             };
-
-            return tipoDto;
         }
 
         public void Adicionar(CriarTipoPatrimonioDto dto)
@@ -64,13 +63,25 @@ namespace GestaoPatrimonio.Applications.Services
             _repository.Adicionar(tipo);
         }
 
-        public void Atualizar(CriarTipoPatrimonioDto dto)
+        public void Atualizar(Guid id, CriarTipoPatrimonioDto dto)
         {
             Validar.ValidarNome(dto.NomeTipo);
 
             TipoPatrimonio tipoExiste = _repository.BuscarPorNome(dto.NomeTipo);
 
+            if(tipoExiste != null)
+            {
+                throw new DomainException("Já existe um tipo de patrimônio com esse nome.");
+            }
 
+            TipoPatrimonio tipoBanco = _repository.BuscarPorId(id);
+            if(tipoBanco == null)
+            {
+                throw new DomainException("Tipo de patrimônio não encontrado.");
+            }
+
+            tipoBanco.NomeTipo = dto.NomeTipo;
+            _repository.Atualizar(tipoBanco);
         }
     }
 }
