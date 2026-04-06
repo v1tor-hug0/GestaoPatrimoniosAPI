@@ -23,5 +23,60 @@ namespace GestaoPatrimonio.Controllers
             return Ok(usuarios);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<ListarUsuarioDto> BuscarPorId(Guid id)
+        {
+            try
+            {
+                ListarUsuarioDto usuarioDto = _service.BuscarPorId(id);
+                return Ok(usuarioDto);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Adicionar(CriarUsuarioDto dto)
+        {
+            try
+            {
+                _service.Adicionar(dto);
+                return Created();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Atualizar(Guid id, CriarUsuarioDto dto)
+        {
+            try
+            {
+                _service.Atualizar(id, dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPatch("{id}/status")]
+        public ActionResult AtualizarStatus(Guid id, AtualizarStatusUsuarioDto dto)
+        {
+            try
+            {
+                _service.AtualizarStatus(id, dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
