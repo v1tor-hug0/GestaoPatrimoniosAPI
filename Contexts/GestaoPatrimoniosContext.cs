@@ -40,13 +40,13 @@ public partial class GestaoPatrimoniosContext : DbContext
 
     public virtual DbSet<TipoAlteracao> TipoAlteracao { get; set; }
 
-    public virtual DbSet<TipoPatrimonio> TipoPatrimonio { get; set; }
-
     public virtual DbSet<TipoUsuario> TipoUsuario { get; set; }
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GestaoPatrimonios;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -218,11 +218,6 @@ public partial class GestaoPatrimoniosContext : DbContext
                 .HasForeignKey(d => d.StatusPatrimonioID)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Patrimonio_StatusPatrimonio");
-
-            entity.HasOne(d => d.TipoPatrimonio).WithMany(p => p.Patrimonio)
-                .HasForeignKey(d => d.TipoPatrimonioID)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Patrimonio_TipoPatrimonio");
         });
 
         modelBuilder.Entity<SolicitacaoTransferencia>(entity =>
@@ -292,18 +287,6 @@ public partial class GestaoPatrimoniosContext : DbContext
             entity.Property(e => e.TipoAlteracaoID).HasDefaultValueSql("(newid())");
             entity.Property(e => e.NomeTipo)
                 .HasMaxLength(50)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<TipoPatrimonio>(entity =>
-        {
-            entity.HasKey(e => e.TipoPatrimonioID).HasName("PK__TipoPatr__4DC9FF996CE3A948");
-
-            entity.HasIndex(e => e.NomeTipo, "UQ__TipoPatr__7859A10ABF35EB70").IsUnique();
-
-            entity.Property(e => e.TipoPatrimonioID).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.NomeTipo)
-                .HasMaxLength(100)
                 .IsUnicode(false);
         });
 

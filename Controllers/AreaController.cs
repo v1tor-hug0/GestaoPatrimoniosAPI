@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GestaoPatrimonio.Applications.Services;
 using GestaoPatrimonio.DTOs.AreaDto;
 using GestaoPatrimonio.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoPatrimonio.Controllers
 {
@@ -38,6 +39,7 @@ namespace GestaoPatrimonio.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Adicionar(CriarAreaDto dto)
         {
@@ -52,6 +54,7 @@ namespace GestaoPatrimonio.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult Atualizar(Guid id, CriarAreaDto dto)
         {
