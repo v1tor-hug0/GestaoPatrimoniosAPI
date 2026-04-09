@@ -60,9 +60,69 @@ namespace GestaoPatrimonio.Repositories
             return _context.Localizacao.Any(l => l.LocalizacaoID == localizacaoId);
         }
 
-        public Patrimonio BuscarPatrimonioPorId(Guid patrimonioId)
+        public Patrimonio BuscarPorPatrimonioId(Guid patrimonioId)
         {
             return _context.Patrimonio.Find(patrimonioId);
+        }
+
+        public StatusPatrimonio BuscarStatusPatrimonioPorNome(string nomeStatus)
+        {
+            return _context.StatusPatrimonio.FirstOrDefault(status => status.NomeStatus.ToLower() == nomeStatus.ToLower());
+        }
+
+       
+
+        public TipoAlteracao BuscarTipoAlteracaoPorNome(string nomeTipo)
+        {
+            return _context.TipoAlteracao.FirstOrDefault(tipo => tipo.NomeTipo.ToLower() == nomeTipo.ToLower());
+        }
+
+        public void Atualizar(SolicitacaoTransferencia solicitacaoTransferencia)
+        {
+            if (solicitacaoTransferencia == null)
+            {
+                return;
+            }
+
+            SolicitacaoTransferencia solicitacaoBanco = _context.SolicitacaoTransferencia.Find(solicitacaoTransferencia.TransferenciaID);
+
+            if (solicitacaoBanco == null)
+            {
+                return;
+            }
+
+            solicitacaoBanco.DataResposta = solicitacaoTransferencia.DataResposta;
+            solicitacaoBanco.StatusTransferenciaID = solicitacaoTransferencia.StatusTransferenciaID;
+            solicitacaoBanco.UsuarioIDAprovacao = solicitacaoTransferencia.UsuarioIDAprovacao;
+
+            _context.SaveChanges();
+        }
+
+        public void AtualizarPatrimonio(Patrimonio patrimonio)
+        {
+            if (patrimonio == null)
+            {
+                return;
+            }
+
+            Patrimonio patrimonioBanco = _context.Patrimonio.Find(patrimonio.PatrimonioID);
+            
+            if (patrimonioBanco == null)
+            {
+                return;
+            }
+
+            patrimonioBanco.LocalizacaoID = patrimonio.LocalizacaoID;
+            patrimonioBanco.StatusPatrimonioID = patrimonio.StatusPatrimonioID;
+
+            _context.SaveChanges();
+
+        }
+
+        public void AdicionarLog(LogPatrimonio logPatrimonio)
+        {
+            _context.LogPatrimonio.Add(logPatrimonio);
+            _context.SaveChanges();
         }
     }
 }
